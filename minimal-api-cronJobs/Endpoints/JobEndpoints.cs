@@ -21,6 +21,17 @@ namespace CronJobs.Endpoints
 
                 return Results.Ok(jobs);
             });
+
+            // get {id}
+            app.MapGet("/jobs/{id}", async (int id, JobService service) =>
+            {
+                var job = await service.GetJobById(id);
+
+                if (job is null)
+                    return Results.NotFound();
+
+                return Results.Ok(job);
+            });
         }
     }
 }

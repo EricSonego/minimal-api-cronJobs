@@ -26,5 +26,12 @@ namespace CronJobs.Services
         {
             return await _context.Jobs.ToListAsync();
         }
+
+        // get {id}
+        public async Task<JobModel?> GetJobById(int id)
+        {
+            return await _context.Jobs
+                .FirstOrDefaultAsync(j => j.IdJob == id);
+        }
     }
 }

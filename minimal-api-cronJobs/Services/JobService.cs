@@ -1,5 +1,6 @@
 ﻿using CronJobs.Data;
 using CronJobs.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CronJobs.Services
 {
@@ -12,11 +13,18 @@ namespace CronJobs.Services
             _context = context;
         }
 
+        // post
         public async Task<JobModel> CreateJob(JobModel job)
         {
             _context.Jobs.Add(job);
             await _context.SaveChangesAsync();
             return job;
+        }
+
+        // get
+        public async Task<List<JobModel>> GetJobs()
+        {
+            return await _context.Jobs.ToListAsync();
         }
     }
 }

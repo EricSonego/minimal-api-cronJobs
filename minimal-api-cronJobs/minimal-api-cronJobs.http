@@ -1,0 +1,6 @@
+@minimal_api_cronJobs_HostAddress = http://localhost:5092
+
+GET {{minimal_api_cronJobs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

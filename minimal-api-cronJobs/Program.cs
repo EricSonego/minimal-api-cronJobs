@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 // services
 builder.Services.AddScoped<JobService>();
+builder.Services.AddHostedService<JobSchedulerService>();
 
 var app = builder.Build();
 

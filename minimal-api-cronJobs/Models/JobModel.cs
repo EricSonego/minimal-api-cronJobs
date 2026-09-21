@@ -10,5 +10,7 @@
         public bool Active { get; set; } = true;
         public DateTime CreatedOn { get; set; }
         public DateTime? UpdateOn { get; set; }
+        public DateTime? NextRun { get; set; }
+        public DateTime? LastRun { get; set; }
     }
 }

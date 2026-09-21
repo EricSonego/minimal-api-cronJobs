@@ -17,6 +17,9 @@ namespace CronJobs.Services
         // post
         public async Task<JobModel> CreateJob(JobModel job)
         {
+            job.CreatedOn = DateTime.UtcNow;
+            job.LastRun = null;
+            job.NextRun = job.Active ? CalculateNextRun(job.Schedule) : null;
             _context.Jobs.Add(job);
             await _context.SaveChangesAsync();
             return job;
@@ -46,6 +49,7 @@ namespace CronJobs.Services
             job.Type = input.Type;
             job.Active = input.Active;
             job.UpdateOn = DateTime.UtcNow;
+            job.NextRun = job.Active ? CalculateNextRun(job.Schedule) : null;
             await _context.SaveChangesAsync();
             return true;
         }
@@ -63,5 +67,10 @@ namespace CronJobs.Services
         // validate crono
         public static bool IsValidSchedule(string schedule) =>
             CronExpression.TryParse(schedule, CronFormat.Standard, out _);
+
+        // aux
+        private static DateTime? CalculateNextRun(string schedule) =>
+            CronExpression.Parse(schedule, CronFormat.Standard)
+                .GetNextOccurrence(DateTime.UtcNow, TimeZoneInfo.Utc);
     }
 }
